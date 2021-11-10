@@ -1,0 +1,168 @@
+{% load static %}
+
+{% comment %}
+{% load tutorial_sidebar %}
+{% get_topic_sidebar topic.slug %}
+{% endcomment %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Code247</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <!-- build:css css/main.css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+
+        <!--link rel="stylesheet" type="text/css" href="{% static 'blog/style_sidebar.css' %}"-->
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/styles1.css' %}">
+
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    <!-- highlightjs, to highlight codesnippets -->>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+
+
+    </head>
+    <body>
+
+
+        
+        <nav class="navbar navbar-dark bg-dark navbar-expand-sm fixed-top py-0">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand mr-auto" href="#"><img src="{% static '../media/uploads/2021/10/28/desert.jpg' %}" height="35" width="55"></a>
+                <h4 class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Coder247++</a></h4>
+                <div class="collapse navbar-collapse" id="Navbar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}"><span class="fa fa-home fa-lg"></span>Home</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'blog:all' %}">All Posts</a></li>
+                        <!--Check if user is authenticated, then display the following-->
+                    </ul>
+
+
+
+                      {# categories in navbar #}
+                    <ul class="navbar-nav mr-auto">
+                        {% if categories %}
+                            {% for category in categories %}
+                            <span class="navbar-text active"><a class="nav-link" href="{% url 'blog:category-posts' category.slug %}">{{ category.name }}</a></span>
+                            {% endfor %}
+                        {% endif %}
+ 
+                    </ul>
+                    {% include "blog/searchbox.html" %}
+                </div>
+            </div>
+        </nav>
+
+
+
+    <div class="wrapper">  
+        {% block sidebar %}            
+        {% include "blog/side_bar2.html" %}
+        {% endblock %}
+        <div id="content">
+
+            <div class="row">
+                <ol class="col-12 breadcrumb">
+                    <button type="button" id="sidebarCollapse" class="btn btn-secondary">
+                        <i class="fa fa-angle-double-left"></i>
+                        <span>Toggle Sidebar</span>
+                    </button>
+                    <!--li class="breadcrumb-item"><a href="{ url 'home'}">Home</a></li>
+                    <li class="breadcrumb-item active">About Us</li-->
+                </ol>
+
+            </div>
+
+        {% block content %}
+        
+        
+
+
+        {% endblock %}
+        </div>
+    </div>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+	 <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+    <!-- build:js js/main.js -->
+    
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar, #content').toggleClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+        });
+    </script>
+
+    </body>
+    <!--footer class="footer">
+        <div class="container">
+            <div class="row">
+
+                
+                <div class="col-7 col-sm-5">
+                    <h5>Reach out to us:</h5>
+                    <address>
+		              4908 134 Ave NW<br>
+		              Edmonton, Alberta<br>
+		              Canada<br>
+                      <i class="fa fa-phone fa-lg"></i>: +1 587 1234 5678<br>
+                      <i class="fa fa-fax fa-lg"></i>: +1 780 8765 4321<br>
+                      <i class="fa fa-envelope fa-lg"></i>: <a href="blogs@blogbuilders.ca">blogs@blogbuilders.ca</a>
+
+					</address>
+                </div>
+                <div class="col-12 col-sm-4 align-self-center">
+					<div class="text-left"><h5>Lets Connect:</h5></div>
+                    <div class="text-left">
+                        <a class="btn btn-social-icon btn-google" href="http://google.com/+"><i class="fa fa-google-plus"></i></a>
+                        <a class="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id="><i class="fa fa-facebook"></i></a>
+                        <a class="btn btn-social-icon btn-linkedin" href="https://www.linkedin.com/in/abdul-rashid-bawah-msc-e-i-t-6111451b2/"><i class="fa fa-linkedin"></i></a>
+                        <a class="btn btn-social-icon btn-twitter" href="https://twitter.com/RashidBawah"><i class="fa fa-twitter"></i></a>
+                        <a class="btn btn-social-icon btn-google" href="http://youtube.com/"><i class="fa fa-youtube"></i></a>
+                        <a class="btn btn-social-icon" href="mailto:arbawah1@gmail.com"><i class="fa fa-envelope-o"></i></a>
+                    </div>
+
+                </div>
+           </div>
+           <div class="row justify-content-center">
+                <div class="col-auto">
+                    <p>© Copyright 2021 Blog Builders Inc.</p>
+                </div>
+           </div>
+        </div>
+    </footer-->
+</html>

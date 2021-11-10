@@ -1,0 +1,54 @@
+
+
+
+<nav id="sidebar">
+    <div class="sidebar-header">
+
+        <h4><a href = "#">{{ topic }}</a></h4>
+    </div>
+
+    {% if plist %}
+    <ul class="list-unstyled components">
+        {% for post in plist %}
+          <li>
+            <a href="#">{{ post.title }} </a>
+          </li>
+        {% endfor %}
+        {% else %}
+        <p>There are no Tutorials to displays.</p>
+        {% endif %} 
+
+        <li>
+            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">About</a>
+            <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li>
+                    <a href="#">About me</a>
+                </li>
+                <li>
+                    <a href="#">Page</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Portfolio</a>
+        </li>
+        <li>
+            <a href="#">Contact</a>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            <a href="#" class="download">Download source</a>
+        </li>
+        <li>
+            <a href="#" class="article">Back to article</a>
+        </li>
+    </ul>
+</hr>
+    <ul class="list-unstyled CTAs">
+    </ul>
+</nav>

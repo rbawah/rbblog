@@ -1,0 +1,58 @@
+
+  {% block sidebar %} 
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h4><a href = "#">Tutorials</a></h4>
+    </div>
+    <ul class="list-unstyled components">
+
+        {% if topics %}
+        {% for topic in topics %}
+{% comment %}
+          <li>
+            <a href="{% url 'blog:topic-articles' topic.slug %}">{{ topic.name }} </a>
+          </li>
+          <span class="navbar-text active"><a class="nav-link" href="{% get_topic_sidebar slug=topic.slug %}">Tutorials</a></span>
+{% endcomment %}
+          <li>
+            <a href="{% url 'blog:tuts-posts' topic.slug %}">{{ topic.name }} </a>
+          </li>
+
+        {% endfor %}
+        {% else %}
+        <p>There are no Tutorials to displays.</p>
+        {% endif %} 
+
+        <li>
+            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">About</a>
+            <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li>
+                    <a href="#">About me</a>
+                </li>
+                <li>
+                    <a href="#">Page</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Portfolio</a>
+        </li>
+        <li>
+            <a href="#">Contact</a>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            <a href="#" class="download">Download source</a>
+        </li>
+        <li>
+            <a href="#" class="article">Back to article</a>
+        </li>
+    </ul>
+</nav>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base_generic.html" %}
+
+
+
+{% block content %}
+{% if search %}
+<h4>Your search results for "{{ search }}"" </h4>
+{% else %}
+<h4>Recent Posts </h4>
+{% endif %}
+<p>
+{% if page_obj %}
+<ul class="list-unstyled components">
+{% for post in page_obj %}
+    <li>
+        <a href="{{ post.get_absolute_url }}">
+        <div class="card card-body bg-light">
+            <div class="col col-sm order-sm-first col-md">
+				<div class="media">
+                    {# <!--img class="d-flex mr-3 img-thumbnail align-self-center" src="{% static 'blog/media/uploads/2021/10/28/desert.jpg' %}" alt=" "--> #}
+                    <div class="media-body">
+                        <h5 class="mt-0"><span class="badge badge-danger">NEW</span><span class="badge badge-pill badge-secondary">{{ post.title }}</span></h5>
+                        <p class="d-none d-sm-block">            
+                        {% if post.text|length < 201 %}
+                            {{ post.text | safe }}
+                        {% else %}
+                            {{ post.text|slice:"0:200" | safe }}
+                        {% endif %}</p></a>
+{% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </li>
+</ul>
+{% else %}
+  {% if search %}
+    <p>There are no posts for your search "{{ search }}".</p>
+    {% else %}
+    <p>There are no posts to display.</p>
+    {% endif %}
+{% endif %}
+
+
+{% comment %}
+
+        <div style="left:10px">
+            {% if post.text|length < 201 %}
+                {{ post.text | safe }}
+            {% else %}
+                {{ post.text|slice:"0:200" | safe }}
+                <a href="{{ post.get_absolute_url }}">...</a>
+            {% endif %}
+        </div>
+        <small>
+        {% if post.author.username %}
+            posted by {{ post.author.username }}
+        {% endif %}
+        {{ post.natural_updated }}
+        </small>
+{% endcomment %}
+
+
+</p>
+
+
+<!--Pagination-->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                {# <a href="?page=1">&laquo; <button type="button" class="btn btn-danger">First</button></a> #}
+                <a href="?page={{ page_obj.previous_page_number }}"><button type="button" class="btn btn-danger">Previous</button></a>
+            {% endif %}
+    
+            <span class="page-current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-danger">Next</button></a>
+                {# <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-danger">Last</button> &raquo;</a> #}
+            {% endif %}
+        </span>
+    </div>
+
+    <!--Pagination End-->
+{% endblock %}

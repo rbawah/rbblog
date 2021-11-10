@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h4> All Blog Articles Published on {{ topic }}</h4>
+
+    {% if posts %}
+    <ul>
+
+      {% for post in posts %}
+      <li>
+        <p><a href="{{ post.get_absolute_url }}">{{ post }}</a> Published on: {{ post.published_date }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no Articles to display.</p>
+    {% endif %}
+{% endblock %}

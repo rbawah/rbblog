@@ -1,0 +1,13 @@
+
+
+<ul class="navbar-nav mr-auto">
+    {% if categories %}
+    {% for category in categories %}
+        <span class="navbar-text"><a href="{% url 'blog:category-posts' category.slug %}">{{ category.name }}</a></span>
+    {% endfor %}
+
+    {% else %}
+    <p>There are no Tutorials to displays.</p>
+    {% endif %} 
+</ul>
+

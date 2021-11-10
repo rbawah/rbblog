@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h4>Topic List</h4>
+          {% if topic_list %}
+          <ul>
+            {% for topic in topic_list %}
+              <li>
+                <a href="{#{ topic.get_absolute_url }#} {#% url 'blog:topic-articles' %#}">{{ topic.name }} </a>
+              </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+            <p>There are no topics to displays.</p>
+          {% endif %} 
+{% endblock %}
