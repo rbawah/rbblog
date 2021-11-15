@@ -6,7 +6,7 @@
 {% if search %}
 <h4>Your search results for "{{ search }}"" </h4>
 {% else %}
-<h4>Recent Posts </h4>
+<h4>All Posts </h4>
 {% endif %}
 <p>
 {% if page_obj %}
@@ -19,8 +19,9 @@
 				<div class="media">
                     {# <!--img class="d-flex mr-3 img-thumbnail align-self-center" src="{% static 'blog/media/uploads/2021/10/28/desert.jpg' %}" alt=" "--> #}
                     <div class="media-body">
-                        <h5 class="mt-0"><span class="badge badge-danger">NEW</span><span class="badge badge-pill badge-secondary">{{ post.title }}</span></h5>
-                        <p class="d-none d-sm-block">            
+                        {#<h5 class="mt-0"><span class="badge badge-danger">NEW</span><span class="badge badge-pill badge-secondary">{{ post.title }}</span></h5>#}
+                        <h4 class="mt-0"><span class="badge badge-pill badge-secondary">{{ post.title }}</span></h4>
+                        <p class="d-none d-sm-block">
                         {% if post.text|length < 201 %}
                             {{ post.text | safe }}
                         {% else %}
@@ -43,25 +44,6 @@
 {% endif %}
 
 
-{% comment %}
-
-        <div style="left:10px">
-            {% if post.text|length < 201 %}
-                {{ post.text | safe }}
-            {% else %}
-                {{ post.text|slice:"0:200" | safe }}
-                <a href="{{ post.get_absolute_url }}">...</a>
-            {% endif %}
-        </div>
-        <small>
-        {% if post.author.username %}
-            posted by {{ post.author.username }}
-        {% endif %}
-        {{ post.natural_updated }}
-        </small>
-{% endcomment %}
-
-
 </p>
 
 
@@ -72,11 +54,11 @@
                 {# <a href="?page=1">&laquo; <button type="button" class="btn btn-danger">First</button></a> #}
                 <a href="?page={{ page_obj.previous_page_number }}"><button type="button" class="btn btn-danger">Previous</button></a>
             {% endif %}
-    
+
             <span class="page-current">
                 Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
             </span>
-    
+
             {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-danger">Next</button></a>
                 {# <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-danger">Last</button> &raquo;</a> #}

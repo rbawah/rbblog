@@ -9,11 +9,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Code247</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <meta name="description" content="Join me on this journey programming. Learn Python, Java, C++, JavaScript, Data Structures and Algorithms">
+        <meta name="keywords" content="Python, Data Structures, Algorithms, JavaScript">
+        <meta name="author" content="Rashid Bawah">
+            {# include "blog/detail_head.html" #}
 
     <!-- Bootstrap CSS -->
     <!-- build:css css/main.css -->
@@ -21,7 +25,7 @@
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
 
-        <!--link rel="stylesheet" type="text/css" href="{% static 'blog/style_sidebar.css' %}"-->
+        {# <link rel="stylesheet" type="text/css" href="{% static 'blog/style_sidebar.css' %}"> #}
         <link rel="stylesheet" type="text/css" href="{% static 'blog/styles1.css' %}">
 
         <!-- Scrollbar Custom CSS -->
@@ -31,36 +35,63 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
 
 
+{% block meta %}
+<title>Code247</title>
+<meta name="description" content="Join me on this journey programming. Learn Python, Java, C++, JavaScript, Data Structures and Algorithms">
+<meta name="keywords" content="Python, Data Structures, Algorithms, JavaScript">
+<meta name="author" content="Rashid Bawah">
+
+<meta property="og:title" content="Code247">
+<meta name="description" property="og:description" content="Join me on this journey programming.
+    Learn Python, Java, C++, JavaScript, Data Structures and Algorithms">
+<meta property="og:image" content="https://www.sketchappsources.com/resources/source-image/python-logo.png">
+<meta property="og:image:alt" content="Python Logo">
+<meta property="og:type" content="website">
+
+<meta name=”twitter:card” content="summary">
+<meta name=”twitter:creator” content="@RashidBawah">
+<meta name=”twitter:site” content="@RashidBawah">
+
+{% endblock meta %}
     </head>
     <body>
 
 
-        
+
         <nav class="navbar navbar-dark bg-dark navbar-expand-sm fixed-top py-0">
             <div class="container">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand mr-auto" href="#"><img src="{% static '../media/uploads/2021/10/28/desert.jpg' %}" height="35" width="55"></a>
+                <a class="navbar-brand mr-auto" href="{% url 'home' %}"><img src="{% static '../media/uploads/2021/10/28/desert.jpg' %}" height="35" width="55"></a>
                 <h4 class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Coder247++</a></h4>
                 <div class="collapse navbar-collapse" id="Navbar">
+
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}"><span class="fa fa-home fa-lg"></span>Home</a></li>
                         <li class="nav-item active"><a class="nav-link" href="{% url 'blog:all' %}">All Posts</a></li>
-                        <!--Check if user is authenticated, then display the following-->
+
+                        {# categories in navbar #}
+                        {% if categories %}
+                            {% for category in categories %}
+                            <li class="nav-item active"><a class="nav-link" href="{% url 'blog:category-posts' category.slug %}">{{ category.name }}s </a></li>
+                            {% endfor %}
+                        {% endif %}
                     </ul>
 
 
 
-                      {# categories in navbar #}
+                    {% comment %}
                     <ul class="navbar-nav mr-auto">
                         {% if categories %}
                             {% for category in categories %}
-                            <span class="navbar-text active"><a class="nav-link" href="{% url 'blog:category-posts' category.slug %}">{{ category.name }}</a></span>
+                            <span class="navbar-text active"><a class="nav-link" href="{% url 'blog:category-posts' category.slug %}">{{ category.name }}s </a></span>
                             {% endfor %}
                         {% endif %}
- 
+
                     </ul>
+                    {% endcomment %}
+
                     {% include "blog/searchbox.html" %}
                 </div>
             </div>
@@ -68,8 +99,8 @@
 
 
 
-    <div class="wrapper">  
-        {% block sidebar %}            
+    <div class="wrapper">
+        {% block sidebar %}
         {% include "blog/side_bar2.html" %}
         {% endblock %}
         <div id="content">
@@ -87,8 +118,8 @@
             </div>
 
         {% block content %}
-        
-        
+
+
 
 
         {% endblock %}
@@ -101,7 +132,7 @@
 
 	 <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
     <!-- build:js js/main.js -->
-    
+
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
@@ -127,12 +158,12 @@
         });
     </script>
 
-    </body>
-    <!--footer class="footer">
+{% comment %}
+    <footer class="footer">
         <div class="container">
             <div class="row">
 
-                
+
                 <div class="col-7 col-sm-5">
                     <h5>Reach out to us:</h5>
                     <address>
@@ -164,5 +195,8 @@
                 </div>
            </div>
         </div>
-    </footer-->
+    </footer>
+{% endcomment %}
+    </body>
+
 </html>

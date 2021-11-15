@@ -5,16 +5,18 @@
 #
 # On a Macintosh this should be python3 and pip3
 #
-python==3.7.10
-django==3.2.5
+#python==3.7.10
+#django==3.2.5
 django-crispy-forms
 django-filter
-djangorestframework
+#djangorestframework
 Markdown
-social-auth-app-django
-social-auth-core
-django-extensions
-django-taggit
+#social-auth-app-django
+#social-auth-core
+#django-extensions
+#django-taggit
+
 mysqlclient
-django-ckeditor
+
 Pillow
+django-ckeditor

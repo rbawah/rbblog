@@ -1,9 +1,10 @@
-{% extends "base_generic.html" %}
+{% extends "base_detail.html" %}
 {% load humanize %} <!-- https://docs.djangoproject.com/en/3.0/ref/contrib/humanize -->
+
 
 {% block content %}
 <span style="float: right;">
-Last updated: {{ post.updated }}
+Last updated: {{ post.updated|date:"D d M Y" }}
 <p>By: {{ post.author }} </p>
 
 </span>

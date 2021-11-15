@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+
+{% block meta %}
+{% if post.slug in request.path %}
+
+<title> {{ post.title }} </title>
+<meta name="description" content="{{ post.summary }}">
+<meta name="keywords" content="{{ post.keywords }}">
+<meta name="author" content="Rashid Bawah">
+
+<meta property="og:title" content="{{ post.title }}">
+<meta name="description" property="og:description" content="{{ post.summary }}">
+<meta property="og:image" content="{{ post.prev_img_url }}">
+<meta property="og:image:alt" content="{{ post.prev_img_alt }}">
+<meta property="og:type" content="{{ post.ogtype }}">
+
+<meta name=”twitter:card” content="{{ post.twittercard }}">
+<meta name=”twitter:creator” content="{{ post.author_twitterhandle }}">
+<meta name=”twitter:site” content="{{ post.site_twitterhandle }}">
+
+{% else %}
+{{ block.super }}
+{% endif %}
+{% endblock meta %}

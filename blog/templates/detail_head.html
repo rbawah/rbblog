@@ -1,0 +1,40 @@
+{% load static %}
+
+
+ <title>Code247</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <meta name="description" content="Join me on this journey programming. Learn Python, Java, C++, JavaScript, Data Structures and Algorithms">
+        <meta name="keywords" content="Python, Data Structures, Algorithms, JavaScript">
+        <meta name="author" content="Rashid Bawah">
+
+    <!-- Bootstrap CSS -->
+    <!-- build:css css/main.css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+
+
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/styles1.css' %}">
+
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    <!-- highlightjs, to highlight codesnippets -->>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+
+{% if post.slug in request.path %}
+<meta property="og:title" content="{{ post.title }}">
+<meta name="description" property="og:description" content="{{ post.summary }}">
+<meta property="og:image" content="{{ post.prev_img_url }}">
+<meta property="og:image:alt" content="{{ post.prev_img_alt }}">
+<meta property="og:type" content="{{ post.ogtype }}">
+
+<meta name=”twitter:card” content="{{ post.twittercard }}">
+<meta name=”twitter:creator” content="{{ post.author_twitterhandle }}">
+<meta name=”twitter:site” content="{{ post.site_twitterhandle }}">
+{% endif %}
+

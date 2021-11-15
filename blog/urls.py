@@ -4,6 +4,7 @@ from . import views
 from blog.models import Post, Topic
 from blog.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
 
+
 app_name='blog'
 
 urlpatterns = [
@@ -41,6 +42,8 @@ urlpatterns = [
 
 
 ]
+
+
 
 urlpatterns += [
     #path('topics/', views.get_topic, name='topic-list'),

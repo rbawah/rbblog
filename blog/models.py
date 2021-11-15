@@ -10,8 +10,15 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.sitemaps import ping_google
 
 # Create your models here.
+'''
+class Ogtype(models.Model):
+    name = models.CharField(max_length=30,
+    help_text='Select the og:type')
+'''
+
 class Category(models.Model):
     """Model representing the Category of the post."""
     name = models.CharField(max_length=100,
@@ -56,7 +63,20 @@ class Topic(models.Model):
 
 
 class Post(models.Model):
+    PUBLISH_CHOICES = (
+        ('D', 'Save to Drafts'),
+        ('P', 'Publish'),)
+
+    OGTYPE_CHOICES = (
+        ('blog', 'blog'),
+        ('article', 'article'),
+        ('website', 'website'),)
+
+    TWITTERCARD_CHOICES = (
+        ('summary', 'summary'),
+        ('summary_large_image', 'summary_large_image'),)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     title = models.CharField(
             max_length=200,
             validators=[MinLengthValidator(2, "Title must be 2 characters or more.")]
@@ -67,8 +87,7 @@ class Post(models.Model):
     serial_num = models.FloatField(
         null=True, blank=True,
     )
-    #text = models.TextField(
-        #validators=[MinLengthValidator(2, "Body must be 2 characters or more.")]
+    #text = models.TextField(validators=[MinLengthValidator(2, "Body must be 2 characters or more.")]
     text = RichTextUploadingField(
             validators=[MinLengthValidator(2, "Body must be 2 characters or more.")],
             external_plugin_resources=[(
@@ -82,6 +101,18 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     topics = models.ManyToManyField(Topic)
     category = models.ManyToManyField(Category)
+    prev_img_url = models.URLField(blank=True, null=True)
+    prev_img_alt = models.CharField(max_length=200, blank=True, null=True)
+
+    twittercard = models.CharField(max_length=25, choices=TWITTERCARD_CHOICES,
+                           help_text='Select twitter:card', blank=True, null=True)
+    status = models.CharField(max_length=1, choices=PUBLISH_CHOICES,
+                           help_text='Save to Drafts or Publish?', blank=True, null=True)
+    ogtype = models.CharField(max_length=25, choices=OGTYPE_CHOICES,
+                           help_text='Select the og:type', blank=True, null=True)
+    author_twitterhandle = models.CharField(max_length=50, blank=True, null=True)
+    site_twitterhandle = models.CharField(max_length=50, blank=True, null=True)
+    keywords = models.CharField(max_length=200, blank=True, null=True)
     slug = models.SlugField(null=False, unique=True)
 
     class Meta:
@@ -98,7 +129,21 @@ class Post(models.Model):
         return reverse('blog:post-detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
+        super().save(force_insert=False, force_update=False)
+        try:
+            ping_google()
+        except Exception:
+            pass
+
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+'''
+    def save(self, force_insert=False, force_update=False):
+        super().save(force_insert, force_update)
+        try:
+            ping_google()
+        except Exception:
+            pass
+'''
 

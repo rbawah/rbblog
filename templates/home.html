@@ -13,10 +13,11 @@
         <div class="card card-body bg-light">
             <div class="col col-sm order-sm-first col-md">
 				        <div class="media">
-                    {# <!--img class="d-flex mr-3 img-thumbnail align-self-center" src="{% static 'blog/media/uploads/2021/10/28/desert.jpg' %}" alt=" "--> #}
+
                     <div class="media-body">
-                        <h5 class="mt-0"><span class="badge badge-danger">NEW</span><span class="badge badge-pill badge-secondary">{{ post.title }}</span></h5>
-                        <p class="d-none d-sm-block">            
+
+                        <h4 class="mt-0"><span class="badge badge-pill badge-secondary">{{ post.title }}</span></h4>
+                        <p class="d-none d-sm-block">
                         {% if post.text|length < 201 %}
                             {{ post.text | safe }}
                         {% else %}

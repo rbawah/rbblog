@@ -4,13 +4,31 @@
     <h4> All {{ category }} Posts. </h4>
 
     {% if cat_posts %}
-    <ul>
+    <ul class="list-unstyled components">
 
       {% for post in cat_posts %}
-      <li>
-        <a href="{{ post.get_absolute_url }}">{{ post }}</a>
-      </li>
-      {% endfor %}
+<li>
+        <a href="{{ post.get_absolute_url }}">
+        <div class="card card-body bg-light">
+            <div class="col col-sm order-sm-first col-md">
+				<div class="media">
+                    {# <!--img class="d-flex mr-3 img-thumbnail align-self-center" src="{% static 'blog/media/uploads/2021/10/28/desert.jpg' %}" alt=" "--> #}
+                    <div class="media-body">
+                       {# <h5 class="mt-0"><span class="badge badge-danger">NEW</span><span class="badge badge-pill badge-secondary">{{ post.title }}</span></h5> #}
+                        <h4 class="mt-0"><span class="badge badge-pill badge-secondary">{{ post.title }}</span></h4>
+                        <p class="d-none d-sm-block">
+                        {% if post.text|length < 201 %}
+                            {{ post.text | safe }}
+                        {% else %}
+                            {{ post.text|slice:"0:200" | safe }}
+                        {% endif %}</p></a>
+{% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </li>
     </ul>
 
     {% else %}

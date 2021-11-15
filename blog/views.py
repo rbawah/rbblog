@@ -24,11 +24,9 @@ class PostListView(View):
             # __icontains for case-insensitive search
             query = Q(title__icontains=strval)
             query.add(Q(text__icontains=strval), Q.OR)
-            post_list = Post.objects.filter(query).prefetch_related('category').order_by('id')#[:10]
+            post_list = Post.objects.filter(query).select_related().order_by('published_date')#[:10]
         else :
-            post_list = Post.objects.all().order_by('id')#[:10]
-
-        # Augment the post_list
+            post_list = Post.objects.filter(status='P').order_by('published_date')#[:10]
 
         paginator = Paginator(post_list, 5)  # Show 5 posts per page.
         page_number = request.GET.get('page')
@@ -41,24 +39,26 @@ class TutsListView(View):
 
     def get(self, request, slug):
         topic = Topic.objects.get(slug=slug)
-        post_list1 = Post.objects.filter(
+        post_list = Post.objects.filter(status='P').filter(
             category__name='Tutorial'
         ).filter(
             topics__slug=slug
         ).order_by(
-            'published_date')
+            'serial_num')
 
-        post_list = Post.objects.prefetch_related('topics')
+        plist = []
+        for p in post_list:
+            plist.append(p.title)
 
         paginator = Paginator(post_list, 1)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        ctx = {'page_obj': page_obj, 'topic': topic,}
+        ctx = {'page_obj': page_obj, 'topic': topic, 'plist': plist,}
         return render(request, self.template_name, ctx)
 
 
 def get_posts_by_topic(request, slug):
-    posts = Post.objects.filter(topics__slug=slug).order_by('published_date')
+    posts = Post.objects.filter(status='P').filter(topics__slug=slug).order_by('published_date')
     topic = Topic.objects.get(slug=slug)
     #topic = get_object_or_404(Topic, slug=slug)
 
@@ -69,7 +69,7 @@ def get_posts_by_topic(request, slug):
 
 
 def get_posts_by_category(request, slug):
-    cat_posts = Post.objects.filter(category__slug=slug).order_by('published_date') #filter post based on Category (Blog or Tutorial)
+    cat_posts = Post.objects.filter(status='P').filter(category__slug=slug).order_by('published_date') #filter post based on Category (Blog or Tutorial)
     category = Category.objects.get(slug=slug)
     return render(request, 'blog/category_articles.html', {
 
